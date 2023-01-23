@@ -16,6 +16,7 @@ use LastCall\DownloadsPlugin\Handler\ArchiveHandler;
 use LastCall\DownloadsPlugin\Handler\BaseHandler;
 use LastCall\DownloadsPlugin\Handler\FileHandler;
 use LastCall\DownloadsPlugin\Handler\PharHandler;
+use LastCall\DownloadsPlugin\Handler\GitHandler;
 
 class DownloadsParser
 {
@@ -62,6 +63,7 @@ class DownloadsParser
             'archive' => ArchiveHandler::CLASS,
             'file' => FileHandler::CLASS,
             'phar' => PharHandler::CLASS,
+            'git' => GitHandler::CLASS,
         ];
         if (isset($extraFile['type'], $types[$extraFile['type']])) {
             return $types[$extraFile['type']];
