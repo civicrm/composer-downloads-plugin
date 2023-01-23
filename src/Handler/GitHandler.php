@@ -35,7 +35,7 @@ class GitHandler extends BaseHandler
      * @param IOInterface $io
      */
     public function download(Composer $composer, IOInterface $io) {
-        $urlAndVersion = $this->createTrackingData()['url'];
+        $urlAndVersion = $this->getSubpackage()->getDistUrl();
         $config = $composer->getConfig();
         $wd = $this->getTargetPath();
         $process = new ProcessExecutor($io);
