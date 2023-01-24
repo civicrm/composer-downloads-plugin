@@ -45,7 +45,7 @@ class GitHandler extends BaseHandler
           $cfs->removeDirectory($wd);
         }
         // Make the directory recursively.
-        mkdir($wd, 0755, TRUE);
+        $cfs->ensureDirectoryExists($wd);
         $gitCallable = static function ($urlAndVersion): string {
             $parts = explode('@', $urlAndVersion);
             $url = $parts[0];
