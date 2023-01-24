@@ -92,7 +92,7 @@ class SniffTest extends IntegrationTestCase
         else {
             unlink($path);
         }
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         $composer_path = self::getComposerPath();
         PH::runOk("$composer_path install -v");
 
@@ -102,7 +102,7 @@ class SniffTest extends IntegrationTestCase
 
     public function assertFileChecksum($file, $sha256, $message = NULL) {
         if ($sha256 === NULL) {
-            $this->assertFileNotExists($file, "($message) File should not exist");
+            $this->assertFileDoesNotExist($file, "($message) File should not exist");
         }
         else {
             $this->assertFileExists($file, "($message) File should exist");
