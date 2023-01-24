@@ -42,36 +42,26 @@ class GitHandler extends BaseHandler
         $cfs = new Filesystem();
         $git = new Git($io, $config, $process, $cfs);
         if (file_exists($wd)) {
-            $gitCallable = static function ($urlAndVersion): string {
-                $parts = explode('@', $urlAndVersion);
-                $url = $parts[0];
-                if (count($parts) > 1) {
-                    $version = $parts[1];
-                }
-                else {
-                    $version = 'master';
-                }
-                return sprintf('git remote update --prune origin && git checkout %s', ProcessExecutor::escape($version));
-            };
+          $cfs->removeDirectory($wd);
         }
-        else {
-            if (!file_exists($wd)) {
-                mkdir($wd);
+        // Make the directory recursively.
+        mkdir($wd, 0755, TRUE);
+        $gitCallable = static function ($urlAndVersion): string {
+            $parts = explode('@', $urlAndVersion);
+            $url = $parts[0];
+            if (count($parts) > 1) {
+                $version = $parts[1];
             }
-            $gitCallable = static function ($urlAndVersion): string {
-                print_r($urlAndVersion);
-                $parts = explode('@', $urlAndVersion);
-                $url = $parts[0];
-                if (count($parts) > 1) {
-                    $version = $parts[1];
-                }
-                else {
-                    $version = 'master';
-                }
-                return sprintf('git init && git remote add origin %s && git remote update --prune origin && git checkout %s', ProcessExecutor::escape($url), ProcessExecutor::escape($version));
-            };
-          }
-          $git->runCommand($gitCallable, $urlAndVersion, $wd);
+            else {
+                $version = 'master';
+            }
+            return sprintf('git init && git fetch --depth 1 %s %s && git checkout %s',
+              ProcessExecutor::escape($url),
+              ProcessExecutor::escape($version),
+              ProcessExecutor::escape($version)
+            );
+        };
+        $git->runCommand($gitCallable, $urlAndVersion, $wd);
     }
 
 }
