@@ -57,7 +57,6 @@ class GitHandler extends BaseHandler
             }
             return sprintf('git init && git fetch %s && git checkout %s',
               ProcessExecutor::escape($url),
-              ProcessExecutor::escape($version),
               ProcessExecutor::escape($version)
             );
         };
