@@ -16,7 +16,7 @@
     "require": {
         "composer-plugin-api": "^1.1 || ^2.0",
         "php": ">=7.2",
-        "togos/gitignore": "~1.1.1"
+        "civicrm/gitignore": "~1.2.0"
     },
     "require-dev": {
         "composer/composer": "~1.0 || ~2.0",
