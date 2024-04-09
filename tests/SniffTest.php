@@ -45,6 +45,11 @@ class SniffTest extends IntegrationTestCase
                         'url' => 'https://download.civicrm.org/cv/cv.phar-2019-08-20-14fe9da8',
                         'path' => 'bin/cv',
                     ],
+                    'org.civicrm.sms.twilio' => [
+                        'type' => 'git',
+                        'url' => 'https://github.com/civicrm/org.civicrm.sms.twilio@494728cf13bb65c228429665c158d899cd7e6dc1',
+                        'path' => 'web/sites/default/files/civicrm/ext/org.civicrm.sms.twilio',
+                    ],
                 ],
             ],
             'config' => [
@@ -69,7 +74,8 @@ class SniffTest extends IntegrationTestCase
             ['extern/jquery-full', 'extern/jquery-full/Gruntfile.js', '3508ff74f8ef106a80f25f28f44a20c47a2b67d84396bb141928ff978ba4012e'],
             ['extern/jquery-lesser', 'extern/jquery-lesser/dist/jquery.js', '5f2caf09052782caf67e1772c0abce31747ffbc7a1c50690e331b99c7d9ea8dc'],
             ['extern/jquery-lesser', 'extern/jquery-lesser/Gruntfile.js', NULL],
-            ['bin/cv', 'bin/cv', 'bf162d5d7dd0bef087d7dd07f474039b2e25c4bcca328a2b2097958ac6294476']
+            ['bin/cv', 'bin/cv', 'bf162d5d7dd0bef087d7dd07f474039b2e25c4bcca328a2b2097958ac6294476'],
+            ['web/sites/default/files/civicrm/ext/org.civicrm.sms.twilio', 'web/sites/default/files/civicrm/ext/org.civicrm.sms.twilio/info.xml', 'fce6bbd3af2315b4357393b3fc76b52ebc6ab3c27290c82ce7545f0bf2928109'],
         ];
     }
 
@@ -92,7 +98,7 @@ class SniffTest extends IntegrationTestCase
         else {
             unlink($path);
         }
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         $composer_path = self::getComposerPath();
         PH::runOk("$composer_path install -v");
 
@@ -102,7 +108,7 @@ class SniffTest extends IntegrationTestCase
 
     public function assertFileChecksum($file, $sha256, $message = NULL) {
         if ($sha256 === NULL) {
-            $this->assertFileNotExists($file, "($message) File should not exist");
+            $this->assertFileDoesNotExist($file, "($message) File should not exist");
         }
         else {
             $this->assertFileExists($file, "($message) File should exist");

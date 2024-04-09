@@ -63,8 +63,9 @@ The `extra.downloads` section contains a list of files to download. Each extra-f
     * `archive`: The `url` references a zip or tarball which should be extracted at the given `path`. (Default for URLs involving `*.zip`, `*.tar.gz`, or `*.tgz`.)
     * `file`: The `url` should be downloaded to the given `path`. (Default for all other URLs.)
     * `phar`: The `url` references a PHP executable which should be installed at the given `path`.
+    * `git`: The `url` references a git repository address and commit, tag or branch (separated by an @ sign) which should be checked out at the given `path`. (E.g. `https://git.me.org/foo/bar@123abc`.)
 
-* `ignore`: (*Optional*) A list of a files that should be omited from the extracted folder. (This supports a subset of `.gitignore` notation.)
+* `ignore`: (*Optional*) A list of a files that should be omited from the extracted folder. (This supports a subset of `.gitignore` notation.) The `ignore` property is ignored when using the `git` type.
 
 * `version`: (*Optional*) A version number for the downloaded artifact. This has no functional impact on the lifecycle of the artifact, but
    it can affect the console output, and it can be optionally used as a variable when setting `url` or `path`.
